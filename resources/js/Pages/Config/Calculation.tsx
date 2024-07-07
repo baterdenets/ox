@@ -1,21 +1,95 @@
 import { PageProps } from "@/types";
-import {
-    AlertDialog,
-    AlertDialogAction,
-    AlertDialogCancel,
-    AlertDialogContent,
-    AlertDialogDescription,
-    AlertDialogFooter,
-    AlertDialogHeader,
-    AlertDialogTitle,
-    AlertDialogTrigger,
-} from "@/Components/ui/alert-dialog";
 import { TableDemo } from "@/Components/Table";
-import { Button } from "@/Components/ui/button";
-import { CreateForm } from "@/Components/CreateForm";
 import ConfigLayout from "@/Layouts/pageLayouts/ConfigLayout";
+import { useConfigQuery } from "@/lib/api/config";
+import { FormDrawer } from "@/Components/FormDrawer";
+import { useState } from "react";
+import { useMutation } from "@/lib/utils";
+import { toast } from "@/Components/ui/use-toast";
+
+const formFields = [
+    {
+        label: "Code",
+        name: "code",
+        field: "select",
+        options: [
+            { label: "startTime", value: "startTime" },
+            { label: "endTime", value: "endTime" },
+        ],
+    },
+    {
+        label: "value",
+        name: "value",
+        field: (data: any) => {
+            if (data.code === "") return "datepicker";
+            return "input";
+        },
+    },
+];
+
+const columns = [
+    { label: "code", field: "code" },
+    { label: "value", field: "value" },
+];
 
 export default function Calculation({ auth }: PageProps) {
+    const query = useConfigQuery();
+    const mutaion = useMutation("config.create", {
+        onSuccess: () => {
+            query.mutate();
+            toast({
+                title: "Success",
+                description: (
+                    <pre className="mt-2 w-[340px] rounded-md bg-slate-950 p-4">
+                        Config saved
+                    </pre>
+                ),
+            });
+        },
+    });
+
+    const updateMutation = useMutation("config.update", {
+        onSuccess: () => {
+            query.mutate();
+            toast({
+                title: "Success",
+                description: (
+                    <pre className="mt-2 w-[340px] rounded-md bg-slate-950 p-4">
+                        Config updated
+                    </pre>
+                ),
+            });
+        },
+    });
+
+    const deleteMutation = useMutation("config.delete", {
+        onSuccess: () => {
+            query.mutate();
+            toast({
+                title: "Success",
+                description: (
+                    <pre className="mt-2 w-[340px] rounded-md bg-slate-950 p-4">
+                        Config deleted
+                    </pre>
+                ),
+            });
+        },
+    });
+
+    const [data, setData] = useState();
+
+    const onEdit = (data: any) => {
+        setData(data);
+    };
+
+    const onDelete = (data: any) => {
+        deleteMutation.mutate(data);
+    };
+
+    const onView = (data: any) => {
+        setData(data);
+    };
+
     return (
         <ConfigLayout
             auth={auth}
@@ -26,34 +100,26 @@ export default function Calculation({ auth }: PageProps) {
                         Calculation
                     </h2>
                     <div className="ml-auto">
-                        <AlertDialog>
-                            <AlertDialogTrigger>
-                                <Button>Create New</Button>
-                            </AlertDialogTrigger>
-                            <AlertDialogContent>
-                                <AlertDialogHeader>
-                                    <AlertDialogTitle>
-                                        User form
-                                    </AlertDialogTitle>
-                                    <AlertDialogDescription>
-                                        <CreateForm />
-                                    </AlertDialogDescription>
-                                </AlertDialogHeader>
-                                <AlertDialogFooter>
-                                    <AlertDialogCancel>
-                                        Cancel
-                                    </AlertDialogCancel>
-                                    <AlertDialogAction>
-                                        Submit
-                                    </AlertDialogAction>
-                                </AlertDialogFooter>
-                            </AlertDialogContent>
-                        </AlertDialog>
+                        <FormDrawer
+                            triggerText="Add New Config"
+                            title={data ? "View Config" : "New Config"}
+                            mutation={data ? updateMutation : mutaion}
+                            value={data}
+                            formFields={formFields}
+                            onClose={() => setData(undefined)}
+                        />
                     </div>
                 </div>
             }
         >
-            <TableDemo />
+            <TableDemo
+                columns={columns}
+                data={query.data}
+                isLoading={query.isLoading}
+                onEdit={onEdit}
+                onDelete={onDelete}
+                onView={onView}
+            />
         </ConfigLayout>
     );
 }

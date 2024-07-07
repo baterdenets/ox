@@ -2,7 +2,7 @@ import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
 import { Head } from "@inertiajs/react";
 import { SubLayout } from "@/Layouts/SubLayout";
 import { PropsWithChildren } from "react";
-
+import { FileArchive, Settings, Calendar } from "lucide-react";
 export default function ConfigLayout({
     auth,
     header,
@@ -15,9 +15,31 @@ export default function ConfigLayout({
 
             <SubLayout
                 menuItems={[
-                    { name: "Config", path: "config" },
-                    { name: "Calculation", path: "config/calculation" },
-                    { name: "Holiday", path: "config/holiday" },
+                    {
+                        name: "Main info",
+                        menuItems: [
+                            {
+                                name: "Config",
+                                path: "config",
+                                icon: FileArchive,
+                            },
+                        ],
+                    },
+                    {
+                        name: "System configs",
+                        menuItems: [
+                            {
+                                name: "Calculation",
+                                path: "config/calculation",
+                                icon: Settings,
+                            },
+                            {
+                                name: "Holiday",
+                                path: "config/holiday",
+                                icon: Calendar,
+                            },
+                        ],
+                    },
                 ]}
             >
                 <div className="py-8">

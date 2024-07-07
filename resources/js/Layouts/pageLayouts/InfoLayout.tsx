@@ -2,7 +2,7 @@ import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
 import { Head } from "@inertiajs/react";
 import { SubLayout } from "@/Layouts/SubLayout";
 import { PropsWithChildren } from "react";
-
+import { FileArchive, House, User, UserCheck, UserCog } from "lucide-react";
 export default function InfoLayout({
     auth,
     header,
@@ -15,13 +15,44 @@ export default function InfoLayout({
 
             <SubLayout
                 menuItems={[
-                    { name: "Info", path: "info" },
-                    { name: "Corp", path: "info/corp" },
-                    { name: "Office", path: "info/office" },
-                    { name: "Division", path: "info/division" },
-                    { name: "Position", path: "info/position" },
-                    { name: "Role", path: "info/role" },
-                    { name: "User", path: "info/user" },
+                    {
+                        name: "Main ingo",
+                        menuItems: [
+                            {
+                                name: "System Info",
+                                path: "info",
+                                icon: FileArchive,
+                            },
+                        ],
+                    },
+                    {
+                        name: "Info",
+                        menuItems: [
+                            { name: "Corp", path: "info/corp", icon: House },
+                            {
+                                name: "Office",
+                                path: "info/office",
+                                icon: House,
+                            },
+                            {
+                                name: "Division",
+                                path: "info/division",
+                                icon: House,
+                            },
+                            {
+                                name: "Position",
+                                path: "info/position",
+                                icon: UserCheck,
+                            },
+                            { name: "Role", path: "info/role", icon: UserCog },
+                        ],
+                    },
+                    {
+                        name: "Main Info",
+                        menuItems: [
+                            { name: "User", path: "info/user", icon: User },
+                        ],
+                    },
                 ]}
             >
                 <div className="py-8">

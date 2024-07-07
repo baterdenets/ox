@@ -2,6 +2,7 @@ import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
 import { Head } from "@inertiajs/react";
 import { SubLayout } from "@/Layouts/SubLayout";
 import { PropsWithChildren } from "react";
+import { FileArchive, Timer } from "lucide-react";
 
 export default function ConfigLayout({
     auth,
@@ -15,8 +16,26 @@ export default function ConfigLayout({
 
             <SubLayout
                 menuItems={[
-                    { name: "Report", path: "report" },
-                    { name: "Time Report", path: "report/timeReport" },
+                    {
+                        name: "Main info",
+                        menuItems: [
+                            {
+                                name: "Report",
+                                path: "report",
+                                icon: FileArchive,
+                            },
+                        ],
+                    },
+                    {
+                        name: "Main info",
+                        menuItems: [
+                            {
+                                name: "Time Report",
+                                path: "report/timeReport",
+                                icon: Timer,
+                            },
+                        ],
+                    },
                 ]}
             >
                 <div className="py-8">

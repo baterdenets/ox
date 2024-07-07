@@ -1,4 +1,4 @@
 <?php
 use App\Http\Controllers\ConfigController;
 
-Route::get('config', [ConfigController::class, 'index']);
+Route::get('api.config', [ConfigController::class]);

@@ -15,7 +15,9 @@ export default function Users({ auth }: PageProps) {
             }
         >
             <Head title={"Time Record"} />
-            <div className="p-4">Time record</div>
+            <div className="mx-auto sm:px-6 lg:px-8 max-w-7xl ">
+                Time record
+            </div>
         </AuthenticatedLayout>
     );
 }

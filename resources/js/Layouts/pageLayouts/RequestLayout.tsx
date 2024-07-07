@@ -2,8 +2,7 @@ import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
 import { Head } from "@inertiajs/react";
 import { SubLayout } from "@/Layouts/SubLayout";
 import { PropsWithChildren } from "react";
-import { Input } from "@/Components/ui/input";
-
+import { FileArchive, FileBox } from "lucide-react";
 export default function ConfigLayout({
     auth,
     header,
@@ -15,10 +14,22 @@ export default function ConfigLayout({
             <Head title={title} />
 
             <SubLayout
-                topItem={<Input placeholder="Search" />}
                 menuItems={[
-                    { name: "Request", path: "request" },
-                    { name: "vacancy", path: "request/vacancy" },
+                    {
+                        name: "Request",
+                        menuItems: [
+                            {
+                                name: "Request",
+                                path: "request",
+                                icon: FileArchive,
+                            },
+                            {
+                                name: "Vacancy",
+                                path: "request/vacancy",
+                                icon: FileBox,
+                            },
+                        ],
+                    },
                 ]}
             >
                 <div className="py-8">

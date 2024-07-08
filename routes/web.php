@@ -100,7 +100,7 @@ Route::middleware('auth')->group(function () {
     Route::get('office.get', [OfficeController::class, 'index'])->name('office.get');
     Route::post('office.create', [OfficeController::class, 'store'])->name('office.create');
     Route::post('office.update', [OfficeController::class, 'update'])->name('office.update');
-    Route::post('office.delete', [OfficeController::class, 'delete'])->name('corp.delete');
+    Route::post('office.delete', [OfficeController::class, 'delete'])->name('office.delete');
 });
 
 require __DIR__.'/auth.php';

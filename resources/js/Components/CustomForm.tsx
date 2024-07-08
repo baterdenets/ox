@@ -22,18 +22,17 @@ import {
     SelectTrigger,
     SelectValue,
 } from "@/Components/ui/select";
-import { toast } from "@/Components/ui/use-toast";
 import { Button } from "@/Components/ui/button";
 import { useMemo } from "react";
 
-const FormSchema = z.object({
-    code: z.string().min(2, {
-        message: "Username must be at least 2 characters.",
-    }),
-    value: z.string().min(2, {
-        message: "Username must be at least 2 characters.",
-    }),
-});
+// const FormSchema = z.object({
+//     code: z.string().min(2, {
+//         message: "Username must be at least 2 characters.",
+//     }),
+//     value: z.string().min(2, {
+//         message: "Username must be at least 2 characters.",
+//     }),
+// });
 
 function useField(field: string): any {
     const component = useMemo(() => {
@@ -82,6 +81,7 @@ function generateFormItem({
     field,
     options,
     name,
+    type,
 }: {
     form: any;
     label: string;
@@ -93,6 +93,7 @@ function generateFormItem({
     field: string;
     options: any[];
     name: string;
+    type: string;
 }) {
     const FieldComponent = useField(field);
     return (
@@ -108,6 +109,7 @@ function generateFormItem({
                             label={label}
                             field={field}
                             options={options}
+                            type={type}
                             {...field}
                         />
                     </FormControl>
@@ -128,13 +130,8 @@ export function CustomForm({
     onSubmit: any;
     value: any;
 }) {
-    const form = useForm<z.infer<typeof FormSchema>>({
-        resolver: zodResolver(FormSchema),
-        defaultValues: {
-            code: "",
-            value: "",
-            ...value,
-        },
+    const form = useForm({
+        defaultValues: value,
     });
 
     return (

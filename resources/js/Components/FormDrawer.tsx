@@ -50,6 +50,7 @@ export function FormDrawer({
                         value={value}
                         formFields={formFields}
                         onSubmit={(data: any) => {
+                            if (value) data.id = value.id;
                             mutation.mutate(data).then(() => setOpen(false));
                         }}
                     />

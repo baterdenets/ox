@@ -1,6 +1,6 @@
 import axios from "axios";
 import { type ClassValue, clsx } from "clsx";
-import { useState } from "react";
+import { useCallback, useState } from "react";
 import { twMerge } from "tailwind-merge";
 import useSwr from "swr";
 
@@ -14,17 +14,20 @@ export const useMutation = (
 ) => {
     const [isLoading, setIsLoading] = useState(false);
 
-    function mutate(data: any) {
-        setIsLoading(true);
-        return axios
-            .post(route(key), data)
-            .then(onSuccess)
-            .catch(onFailed)
-            .finally(() => {
-                onFinished && onFinished();
-                setIsLoading(false);
-            });
-    }
+    const mutate = useCallback(
+        (data: any) => {
+            setIsLoading(true);
+            return axios
+                .post(route(key), data)
+                .then(onSuccess)
+                .catch(onFailed)
+                .finally(() => {
+                    onFinished && onFinished();
+                    setIsLoading(false);
+                });
+        },
+        [key]
+    );
 
     return { isLoading, mutate };
 };

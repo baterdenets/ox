@@ -8,4 +8,11 @@ use Illuminate\Database\Eloquent\Model;
 class Office extends Model
 {
     use HasFactory;
+
+    protected $fillable = [
+        'id',
+        'corp_id',
+        'office_name', 
+        'name',
+    ];
 }

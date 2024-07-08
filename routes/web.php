@@ -1,6 +1,8 @@
 <?php
 
 use App\Http\Controllers\ConfigController;
+use App\Http\Controllers\CorpController;
+use App\Http\Controllers\OfficeController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
@@ -89,6 +91,16 @@ Route::middleware('auth')->group(function () {
     Route::post('config.create', [ConfigController::class, 'store'])->name('config.create');
     Route::post('config.update', [ConfigController::class, 'update'])->name('config.update');
     Route::post('config.delete', [ConfigController::class, 'delete'])->name('config.delete');
+
+    Route::get('corp.get', [CorpController::class, 'index'])->name('corp.get');
+    Route::post('corp.create', [CorpController::class, 'store'])->name('corp.create');
+    Route::post('corp.update', [CorpController::class, 'update'])->name('corp.update');
+    Route::post('corp.delete', [CorpController::class, 'delete'])->name('corp.delete');
+
+    Route::get('office.get', [OfficeController::class, 'index'])->name('office.get');
+    Route::post('office.create', [OfficeController::class, 'store'])->name('office.create');
+    Route::post('office.update', [OfficeController::class, 'update'])->name('office.update');
+    Route::post('office.delete', [OfficeController::class, 'delete'])->name('corp.delete');
 });
 
 require __DIR__.'/auth.php';

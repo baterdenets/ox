@@ -20,6 +20,7 @@ const formFields = [
     {
         label: "value",
         name: "value",
+        type: "time",
         field: (data: any) => {
             if (data.code === "") return "datepicker";
             return "input";
@@ -83,7 +84,7 @@ export default function Calculation({ auth }: PageProps) {
     };
 
     const onDelete = (data: any) => {
-        deleteMutation.mutate(data);
+        deleteMutation.mutate({ id: data.id });
     };
 
     const onView = (data: any) => {
